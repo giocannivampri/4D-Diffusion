@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import  crank_nicolson_numba.generic as cn
 import scipy.integrate as integrate
 from numba import njit
-from math import isclose
+
 
 
 #@njit()
@@ -46,8 +46,8 @@ def interpolation(data, index):
 #scala=100
 #epsilon = 1.0
 
-r_1=5
-r_2=2*r_1
+r_1=5. #raggio interno HEL
+r_2=2*r_1. #raggio esterno HEL
 raggio=6.7
 radius=raggio
 emittance_star=2.5e-6
@@ -70,7 +70,7 @@ omega_2yx= 0.66e12 * 2*np.pi * (2*emittance_star/(beta_rel*gamma))**2
 iterations=4096
 #n=30
 n_particles=10**3
-#Min_I=6.125
+
 
 
 #x0=np.linspace(2, (raggio-0.5)/np.sqrt(2), n)
