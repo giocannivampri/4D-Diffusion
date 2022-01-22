@@ -205,21 +205,29 @@ class symplectic_map_cpu(symplectic_map):
         ----------
         object : self
             self
-        omega_0 : float
-            Omega 0 frequency
-        omega_1 : float
-            Omega 1 frequency
-        omega_2 : float
-            Omega 2 frequency
+        omega_vari : float
+            all the Omega frequency
+        
         epsilon : float
             Noise coefficient
-        
+         R_1 : float
+            inner lens radius
+        R_2 : float
+            outer lens radius
+        TH_MAX : float
+            theta max value
+        barrier_radius : float
+            barrier position (x coordinates!)
         barrier_radius : float
             barrier position (x coordinates!)
         x_0 : ndarray
             1D array of x initial positions
-        p_0 : ndarray
-            1D array of p initial values
+        px_0 : ndarray
+            1D array of px initial values
+        y_0 : ndarray
+            1D array of y initial positions
+        py_0 : ndarray
+            1D array of py initial values
         """
         self.omega_0x = omega_0x
         self.omega_1x = omega_1x

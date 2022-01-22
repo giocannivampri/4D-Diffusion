@@ -5,6 +5,22 @@ from numba import jit, njit, prange
 
 @njit
 def f (x, y, R_1, R_2):
+    """internal calculation of the kick function
+    Parameters
+    ----------
+    x : float
+        position
+    y : float
+        position
+    R_1 : float
+        inner lens radius
+    R_2 : float
+        outer lens radius
+    Returns
+    -------
+    float 
+        kick value
+    """
     r=np.sqrt(x**2 + y**2)
     if r < R_1:
         return 0.0
@@ -66,24 +82,23 @@ def iterate(x, px, y, py, noise, epsilon, omega_0x, omega_1x, omega_2x, omega_0y
         x0
     px : float
         px0
+    y : float
+        y0
+    py : float
+        py0
     noise : ndarray
         array of noise values
     epsilon : float
         epsilon value
-    alpha : float
-        alpha exponential
-    beta : float
-        beta exponential
-    x_star : float
-        nek coefficient
-    delta : float
-        delta coefficient for fix
-    omega_0 : float
-        omega 0
-    omega_1 : float
-        omega 1
-    omega_2 : float
-        omega 2
+    
+    omega_vari : float
+        all the omega values 
+     R_1 : float
+        inner lens radius
+    R_2 : float
+        outer lens radius
+    TH_MAX : float
+        theta max value
     barrier_radius : float
         barrier position 
     start : unsigned int
@@ -92,7 +107,7 @@ def iterate(x, px, y, py, noise, epsilon, omega_0x, omega_1x, omega_2x, omega_0y
     Returns
     -------
     (float, float, unsigned int)
-        (x, px, iterations)
+        (x, px, y, py, iterations)
     """    
 
     
@@ -149,12 +164,9 @@ def symplectic_map_personal(x, px, y, py, step_values, n_iterations, epsilon, om
         number of iterations to perform
     epsilon : float
         epsilon value
-    omega_0 : float
-        ipse dixit
-    omega_1 : float
-        ipse dixit
-    omega_2 : float
-        ipse dixit
+    omega_vari : float
+        all the omega values
+
     R_1 : float
         inner radius
     R_2 : float
@@ -163,8 +175,7 @@ def symplectic_map_personal(x, px, y, py, step_values, n_iterations, epsilon, om
         theta max value
     barrier_radius : float
         barrier radius
-    f : func
-        function defined in the simplectic map
+    
     gamma : float, optional
         correlation coefficient, by default 0.0
     
@@ -196,12 +207,9 @@ def symplectic_map_common(x, px, y, py, step_values, noise_array, epsilon, omega
         noise array for the whole group
     epsilon : float
         epsilon value
-    omega_0 : float
-        ipse dixit
-    omega_1 : float
-        ipse dixit
-    omega_2 : float
-        ipse dixit
+    omega_vari : float
+        all the omega values
+    
     R_1 : float
         inner radius
     R_2 : float

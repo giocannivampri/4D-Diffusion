@@ -45,12 +45,11 @@ def interpolation(data, index):
 #setting parameters
 #scala=100
 #epsilon = 1.0
-epsilon_cn=0.1
+
 r_1=5
 r_2=2*r_1
 raggio=6.7
 radius=raggio
-th_MAX=  0.3*10**-6
 emittance_star=2.5e-6
 beta=280
 gamma=(7000/0.938272088)
@@ -71,13 +70,6 @@ omega_2yx= 0.66e12 * 2*np.pi * (2*emittance_star/(beta_rel*gamma))**2
 iterations=4096
 #n=30
 n_particles=10**3
-mean_x=0.0
-sigma_x=1.0
-mean_p=0.0
-sigma_p=1.0
-Max_I=radius**2 * 0.5
-n_step=3000
-Min_I=r_1**2 * 0.5
 #Min_I=6.125
 
 
@@ -95,7 +87,7 @@ py0=np.zeros(n_particles)
 
 
 
-#evoluzione spazio delle fasi
+#iterazioni mappa
 
 Xfase1=np.zeros(iterations*n_particles)
 Pfase1=np.zeros(iterations*n_particles)
@@ -118,6 +110,9 @@ for i in range(iterations):
         Yfase1[i+ (iterations * e)]=y[e]
         Pfase1Y[i+ (iterations * e)]=py[e]
 
+
+
+#calcolo tune
 
 lista=np.linspace(1, iterations, iterations)
 hanning=2*np.sin(lista*np.pi/iterations)**2
@@ -159,19 +154,26 @@ for i in range(n_particles):
         """
 
 
-#fig, sx=plt.subplots()
+fig, sx=plt.subplots()
 fig, ax=plt.subplots()
 fig, lx=plt.subplots()
-d=np.linspace(0.306, 0.31, 2)
-dx=np.array([r_1, r_1])
+#d=np.linspace(0.306, 0.31, 2)
+#dx=np.array([r_1, r_1])
+ax.set_ylabel("Q")
+ax.set_xlabel("x,y")
 #ax.plot(dx, d)
 #ax.plot(x0, test)
 #ax.plot(y0, testy)
-#ax.plot(x0, tune_x, "r.", markersize=0.5)
-#ax.plot(y0, tune_y, "r.", markersize=0.5)
-ax.plot(tune_x, tune_y, "r.", markersize=0.5)
+ax.plot(x0, tune_x, "r.", markersize=0.5)
+ax.plot(y0, tune_y, "r.", markersize=0.5)
 
-x0=x0[x!=0]
+sx.set_ylabel("Qy")
+sx.set_xlabel("Qx")
+sx.plot(tune_x, tune_y, "r.", markersize=0.5)
+
+
+#futuro scan di risonanze
+"""x0=x0[x!=0]
 y0=y0[x!=0]
 n=20
 m=-10
@@ -180,7 +182,9 @@ bo=n*tune_x+m*tune_y
 epsilon=0.01
 lx.set_ylabel("y")
 lx.set_xlabel("x")
-#lx.plot(x0[abs(bo-p)<epsilon], y0[abs(bo-p)<epsilon], "r.", markersize=1)
+#lx.plot(x0[abs(bo-p)<epsilon], y0[abs(bo-p)<epsilon], "r.", markersize=1)"""
+lx.set_ylabel("y")
+lx.set_xlabel("x")
 lx.plot(x0, y0, "r.", markersize=1)
 
 
